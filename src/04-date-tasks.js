@@ -120,7 +120,7 @@ function timeSpanToString(startDate, endDate) {
 function angleBetweenClockHands(date) {
   // throw new Error('Not implemented');
   const hour = date.getUTCHours() < 12 ? date.getUTCHours() : date.getUTCHours() - 12;
-  console.log(hour);
+  // console.log(hour);
   const minutes = date.getUTCMinutes();
   const minutesAngle = minutes * 6;
   const hourAngle = 0.5 * (60 * hour + minutes);
