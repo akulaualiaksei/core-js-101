@@ -8,7 +8,6 @@
  *                                                                                             *
  ********************************************************************************************* */
 
-
 /**
  * Returns the functions composition of two specified functions f(x) and g(x).
  * The result of compose is to be a function of one argument, (lets call the argument x),
@@ -27,7 +26,6 @@ function getComposition(f, g) {
   // throw new Error('Not implemented');
   return (param) => f(g(param));
 }
-
 
 /**
  * Returns the math power function with the specified exponent
@@ -49,7 +47,6 @@ function getPowerFunction(exponent) {
   // throw new Error('Not implemented');
   return (item) => item ** exponent;
 }
-
 
 /**
  * Returns the polynom function of one argument based on specified coefficients.
@@ -73,15 +70,16 @@ function getPolynom(...args) {
   return (x) => {
     if (args.length === 0) {
       return null;
-    } if (args.length === 1) {
+    }
+    if (args.length === 1) {
       return args[0];
-    } if (args.length === 2) {
+    }
+    if (args.length === 2) {
       return args[0] * x + args[1];
     }
     return args[0] * x ** 2 + args[1] * x + args[2];
   };
 }
-
 
 /**
  * Memoizes passed function and returns function
@@ -114,7 +112,6 @@ function memoize(func) {
   return fn;
 }
 
-
 /**
  * Returns the function trying to call the passed function and if it throws,
  * retrying it specified number of attempts.
@@ -130,10 +127,24 @@ function memoize(func) {
  * }, 2);
  * retryer() => 2
  */
-function retry(/* func, attempts */) {
-  throw new Error('Not implemented');
+function retry(func, attempts) {
+  // throw new Error('Not implemented');
+  let counter = attempts;
+  function tryFunc() {
+    try {
+      return func();
+    } catch (error) {
+      // console.log(error);
+      // console.log('before ', counter);
+      counter -= 1;
+      // console.log('after ', counter);
+      if (counter) tryFunc();
+    }
+    return func();
+  }
+  return tryFunc;
+  // return null;
 }
-
 
 /**
  * Returns the logging wrapper for the specified method,
@@ -162,7 +173,6 @@ function logger(/* func, logFunc */) {
   throw new Error('Not implemented');
 }
 
-
 /**
  * Return the function with partial applied arguments
  *
@@ -176,10 +186,14 @@ function logger(/* func, logFunc */) {
  *   partialUsingArguments(fn, 'a','b','c')('d') => 'abcd'
  *   partialUsingArguments(fn, 'a','b','c','d')() => 'abcd'
  */
-function partialUsingArguments(/* fn, ...args1 */) {
-  throw new Error('Not implemented');
+function partialUsingArguments(fn, ...args1) {
+  // throw new Error('Not implemented');
+  // console.log(fn);
+  // console.log(args1);
+  return (...args) => fn(...args1, ...args);
+  // console.log(...args);
+  // console.log(args);
 }
-
 
 /**
  * Returns the id generator function that returns next integer starting
@@ -198,10 +212,21 @@ function partialUsingArguments(/* fn, ...args1 */) {
  *   getId4() => 7
  *   getId10() => 11
  */
-function getIdGeneratorFunction(/* startFrom */) {
-  throw new Error('Not implemented');
+function getIdGeneratorFunction(startFrom) {
+  // throw new Error('Not implemented');
+  // return getComposition(startFrom + 1);
+  // console.log('start ', startFrom);
+  let count = startFrom;
+  return () => {
+    count += 1;
+    // console.log('count ', count);
+    // console.log('start a- ', startFrom - 1);
+    // console.log('start a+ ', startFrom + 1);
+    // console.log('count a-', count - 1);
+    // console.log('count a+', count + 1);
+    return count - 1;
+  };
 }
-
 
 module.exports = {
   getComposition,
