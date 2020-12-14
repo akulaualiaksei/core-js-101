@@ -341,8 +341,50 @@ function getDigitalRoot(num) {
  *   '{)' = false
  *   '{[(<{[]}>)]}' = true
  */
-function isBracketsBalanced(/* str */) {
-  throw new Error('Not implemented');
+function isBracketsBalanced(str) {
+  // throw new Error('Not implemented');
+  const testArray = [];
+  let finalLength = 0;
+  const bracketsConfig = [['(', ')'], ['[', ']'], ['{', '}'], ['<', '>']];
+  // console.log(str.length);
+  for (let i = 0; i < str.length; i += 1) {
+    for (let j = 0; j < bracketsConfig.length; j += 1) {
+      // console.log(str[i]);
+      // console.log(testArray);
+      if (
+        (bracketsConfig[j][0] === bracketsConfig[j][1])
+                && (str[i] === bracketsConfig[j][1]) // &&
+                // testArray[testArray.length - 1] === bracketsConfig[j][0]
+      ) {
+        if (testArray[testArray.length - 1] === str[i]) {
+          testArray.pop();
+          finalLength += 1;
+        } else {
+          testArray.push(str[i]);
+          finalLength += 1;
+        }
+      } else {
+        if (str[i] === bracketsConfig[j][0]) {
+          testArray.push(str[i]);
+          finalLength += 1;
+        }
+        if (
+          (str[i] === bracketsConfig[j][1])
+                    && (testArray[testArray.length - 1] === bracketsConfig[j][0])
+        ) {
+          testArray.pop();
+          finalLength += 1;
+        }
+      }
+    }
+  }
+  // console.log(testArray);
+  // console.log(finalLength);
+  // console.log(str.length);
+  if ((testArray.length === 0) && (finalLength === str.length)) {
+    return true;
+  }
+  return false;
 }
 
 
@@ -384,8 +426,37 @@ function toNaryString(num, n) {
  *   ['/web/assets/style.css', '/.bin/mocha',  '/read.me'] => '/'
  *   ['/web/favicon.ico', '/web-scripts/dump', '/webalizer/logs'] => '/'
  */
-function getCommonDirectoryPath(/* pathes */) {
-  throw new Error('Not implemented');
+function getCommonDirectoryPath(pathes) {
+  // throw new Error('Not implemented');
+  let result = '';
+  // console.log(pathes);
+  pathes.sort((first, second) => first.length - second.length);
+  // console.log(pathes);
+  for (let i = 0; i < pathes[0].length; i += 1) {
+    const currChar = pathes[0][i];
+    let isAdd = true;
+    // console.log(currChar);
+    for (let j = 0; j < pathes.length; j += 1) {
+      if (pathes[j][i] !== currChar) {
+        isAdd = false;
+        // console.log(result);
+        return result.slice(0, result.lastIndexOf('/') + 1);
+      }
+    }
+    if (isAdd) {
+      result += currChar;
+      // console.log(currChar);
+      // console.log('r', result);
+    }
+    /* pathes.eveery((curr, index) => { if (curr[i] === currChar && index === i) {
+    console.log(curr);
+    result += curr[i];
+      //  console.log(result);
+    return true
+    } else return false }); */
+  }
+  // console.log(result);
+  return result;
 }
 
 
